@@ -1,0 +1,4 @@
+cl\duoc\plataformacursos\model\Curso.class
+cl\duoc\plataformacursos\PlataformaCursosApplication.class
+cl\duoc\plataformacursos\repository\CursoRepository.class
+cl\duoc\plataformacursos\controller\CursoController.class

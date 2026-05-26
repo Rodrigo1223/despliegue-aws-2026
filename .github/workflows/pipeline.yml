@@ -54,11 +54,11 @@ jobs:
           echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
-      - name: SSH commands to deploy
+    - name: SSH commands to deploy
         run: |
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.USER_SERVER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
-            docker stop my-app || true && docker rm my-app || true
-            docker run -d --name my-app -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
+            echo "${{ secrets.DOCKERHUB_TOKEN }}" | sudo docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
+            sudo docker stop my-app || true && sudo docker rm my-app || true
+            sudo docker run -d --name my-app -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
           EOF
